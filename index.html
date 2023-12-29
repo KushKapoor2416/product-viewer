@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Viewer</title>
+    <style>
+        /* Add your custom styles here */
+    </style>
+</head>
+<script>document.addEventListener("DOMContentLoaded", function () {
+    const productListElement = document.getElementById("product-list");
+
+    // Fetch the JSON data
+    fetch("https://s3.amazonaws.com/open-to-cors/assignment.json")
+        .then(response => response.json())
+        .then(data => {
+            // Sort products based on descending popularity
+            const sortedProducts = data.sort((a, b) => b.Popularity - a.Popularity);
+
+            // Display products
+            sortedProducts.forEach(product => {
+                const productElement = document.createElement("div");
+                productElement.innerHTML = `<strong>${product.Title}</strong> - Price: $${product.Price.toFixed(2)}`;
+                productListElement.appendChild(productElement);
+            });
+        })
+        .catch(error => console.error("Error fetching data:", error));
+});
+</script>
+<body>
+    <h1>Product Viewer</h1>
+    <div id="product-list"></div>
+
+    <script>
+        // Add your JavaScript code here
+    </script>
+</body>
+</html>
